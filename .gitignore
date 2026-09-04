@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+.pytest_cache/
+test-results/
+playwright-report/
+.auth/
+playwright/.auth/
+screenshots/*
+!screenshots/.gitkeep
+.env
+.vscode/
+test_learn_playwright.py
