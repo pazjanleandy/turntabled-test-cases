@@ -44,3 +44,12 @@ def test_search_trailing_album(page: Page):
     dashboard_page.popular_albums_search(ALBUM_SEARCH_TERMS[0]["trailing"])
     search_result = page.get_by_role("link", name="Frank Ocean", exact=True)
     expect(search_result).to_be_visible()
+
+def test_full_charts(page: Page):
+    page.goto(HOME_URL)
+
+    full_chart = page.get_by_role("link", name="Full chart")
+    expect(full_chart).to_be_visible
+    full_chart.click()
+    heading = page.get_by_role("heading", name="Album catalog")
+    expect(heading).to_be_visible()
