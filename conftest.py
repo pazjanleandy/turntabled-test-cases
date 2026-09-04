@@ -6,4 +6,5 @@ def browser_context_args(browser_context_args):
     return {
         **browser_context_args,
         "storage_state": ".auth/state.json",
+        "record_video_dir": "videos/",
     }

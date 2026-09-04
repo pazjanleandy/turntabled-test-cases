@@ -23,3 +23,11 @@ class DashboardPage:
         dark_mode = self.page.get_by_role("switch", name="Dark mode")
         expect(dark_mode).to_be_visible()
         dark_mode.click()
+
+    def popular_albums_search(self, album_title):
+        search_bar = self.page.get_by_placeholder("Filter by artist or album")
+        expect(search_bar).to_be_visible()
+        search_bar.fill(album_title)
+
+
+        

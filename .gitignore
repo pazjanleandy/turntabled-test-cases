@@ -7,6 +7,8 @@ playwright-report/
 playwright/.auth/
 screenshots/*
 !screenshots/.gitkeep
+videos/
 .env
 .vscode/
 test_learn_playwright.py
+videos/
