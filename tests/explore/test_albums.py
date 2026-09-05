@@ -19,6 +19,7 @@ def test_explore_link_is_visible(page: Page):
     expect(explore_link).to_be_visible()
 
 
+# EXP-ALB-001
 def test_album_catalog_loads(page: Page):
     explore_page = ExplorePage(page)
     explore_page.open()
@@ -28,6 +29,7 @@ def test_album_catalog_loads(page: Page):
     expect(explore_page.next_button).to_be_enabled()
 
 
+# EXP-ALB-013
 def test_decade_filter_includes_and_excludes_known_albums(page: Page):
     explore_page = ExplorePage(page)
     explore_page.open()
@@ -43,6 +45,7 @@ def test_decade_filter_includes_and_excludes_known_albums(page: Page):
     ).to_be_hidden()
 
 
+# EXP-ALB-020
 def test_search_remains_applied_with_decade_filter(page: Page):
     explore_page = ExplorePage(page)
     explore_page.open()
@@ -57,6 +60,7 @@ def test_search_remains_applied_with_decade_filter(page: Page):
     expect(explore_page.album_cards).to_have_count(1)
 
 
+# EXP-ALB-022, EXP-ALB-023
 def test_next_and_previous_catalog_pages_restore_results(page: Page):
     explore_page = ExplorePage(page)
     explore_page.open()

@@ -29,5 +29,23 @@ class DashboardPage:
         expect(search_bar).to_be_visible()
         search_bar.fill(album_title)
 
+    def trending_reviews_visible(self):
+        trending_reviews = self.page.locator("section").filter(has_text="Trending ReviewsCommunity").nth(1)
+        expect(trending_reviews).to_be_visible()
+
+    def get_featured_review(self):
+        return self.page.get_by_role
+
+    def get_interaction_count(self,item):
+     return item["engagement"]["interactionCount"]
+    
+    def rank_reviews(self,items):
+     return sorted(
+        items,
+        key= self.get_interaction_count,
+        reverse=True
+    )
+
+
 
         
