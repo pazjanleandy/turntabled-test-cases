@@ -35,14 +35,14 @@ def test_trending_reviews_limit():
     assert len(data["items"]) <= 4
 
 
-def test_grammy_winners_total():
+def test_grammy_winners_does_not_exceed_display_limit():
     response = requests.get("https://turntabled-backend.onrender.com/api/explore/grammy-winners")
     data = response.json()
     assert response.status_code == 200
     assert data["total"] == 7
     assert len(data["items"]) <= 7 
 
-def test_trending_review_interaction():
+def test_trending_reviews_sorted_by_interaction_count():
     response = requests.get("https://turntabled-backend.onrender.com/api/explore/trending-reviews?limit=4")
     data = response.json()
 
@@ -53,5 +53,7 @@ def test_trending_review_interaction():
     for item in items]
 
     assert interaction_counts == sorted(interaction_counts, reverse = True)
+
+    
 
 
