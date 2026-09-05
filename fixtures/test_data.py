@@ -7,6 +7,7 @@ BASE_URL = os.getenv("BASE_URL", "https://turntabled-backend.onrender.com/")
 HOME_URL = os.getenv("HOME_URL", "https://turntabled-backend.onrender.com/home")
 EXPLORE_URL = f"{BASE_URL.rstrip('/')}/explore"
 LOGGED_ALBUMS_URL = f"{BASE_URL.rstrip('/')}/backlog"
+PROFILE_URL = f"{BASE_URL.rstrip('/')}/profile"
 
 USERS = [
     {
