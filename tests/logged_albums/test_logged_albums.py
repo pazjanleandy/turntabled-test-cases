@@ -6,6 +6,7 @@ from playwright.sync_api import Page, expect
 from pages.logged_albums_page import LoggedAlbumsPage
 
 
+# ALB-LOG-001, ALB-LOG-002, ALB-LOG-005, ALB-LOG-006, ALB-LOG-022
 def test_logged_albums_page_loads_with_card_metadata(page: Page):
     logged_albums = LoggedAlbumsPage(page)
     logged_albums.open()
@@ -20,6 +21,7 @@ def test_logged_albums_page_loads_with_card_metadata(page: Page):
     expect(logged_albums.artwork).to_have_count(album_count)
 
 
+# ALB-LOG-003
 def test_logged_album_opens_its_matching_detail_page(page: Page):
     logged_albums = LoggedAlbumsPage(page)
     logged_albums.open()
@@ -39,6 +41,7 @@ def test_logged_album_opens_its_matching_detail_page(page: Page):
     ).to_be_visible(timeout=15_000)
 
 
+# ALB-LOG-007, ALB-LOG-016
 def test_rating_filter_updates_results_and_shown_count(page: Page):
     logged_albums = LoggedAlbumsPage(page)
     logged_albums.open()
@@ -61,6 +64,7 @@ def test_rating_filter_updates_results_and_shown_count(page: Page):
         pytest.param("backloggd", "backloggd", id="backloggd"),
     ],
 )
+# ALB-LOG-013, ALB-LOG-016
 def test_status_filter_only_shows_matching_albums(
     page: Page, status_value: str, expected_status: str
 ):
@@ -84,6 +88,7 @@ def test_status_filter_only_shows_matching_albums(
         pytest.param("status", "listened", id="status"),
     ],
 )
+# ALB-LOG-008, ALB-LOG-014, ALB-LOG-025
 def test_filter_reset_restores_original_collection(
     page: Page, filter_name: str, filtered_value: str
 ):
@@ -102,6 +107,7 @@ def test_filter_reset_restores_original_collection(
     assert logged_albums.shown_total() == len(original_albums)
 
 
+# ALB-LOG-015, ALB-LOG-016
 def test_rating_and_status_filters_apply_together(page: Page):
     logged_albums = LoggedAlbumsPage(page)
     logged_albums.open()
@@ -118,6 +124,7 @@ def test_rating_and_status_filters_apply_together(page: Page):
     assert logged_albums.shown_total() == len(ratings) == len(statuses)
 
 
+# ALB-LOG-017
 def test_filters_can_produce_an_empty_state(page: Page):
     logged_albums = LoggedAlbumsPage(page)
     logged_albums.open()
@@ -137,6 +144,7 @@ def test_filters_can_produce_an_empty_state(page: Page):
         pytest.param("date-logged-asc", False, id="oldest"),
     ],
 )
+# ALB-LOG-018, ALB-LOG-019
 def test_logged_date_sorting(page: Page, sort_value: str, reverse: bool):
     logged_albums = LoggedAlbumsPage(page)
     logged_albums.open()
@@ -148,6 +156,7 @@ def test_logged_date_sorting(page: Page, sort_value: str, reverse: bool):
     assert dates == sorted(dates, reverse=reverse)
 
 
+# ALB-LOG-021
 def test_sorting_preserves_active_status_filter(page: Page):
     logged_albums = LoggedAlbumsPage(page)
     logged_albums.open()
@@ -165,6 +174,7 @@ def test_sorting_preserves_active_status_filter(page: Page):
     assert dates == sorted(dates)
 
 
+# ALB-LOG-025, ALB-LOG-026
 def test_collection_is_restored_after_filter_reset_and_refresh(page: Page):
     logged_albums = LoggedAlbumsPage(page)
     logged_albums.open()
