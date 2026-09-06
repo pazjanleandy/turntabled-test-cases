@@ -46,6 +46,22 @@ class DashboardPage:
         reverse=True
     )
 
+    def trending_lists_visible(self):
+       trending_lists = self.page.locator("section:nth-child(4) > .card")
+       expect(trending_lists).to_be_visible()
+       return trending_lists
+
+    def get_list_interaction_count(self,item):
+       return item["favoriteCount"] + item["commentCount"]
+
+    def rank_lists(self,items):
+       return sorted(
+          items,
+          key = self.get_list_interaction_count,
+          reverse=True
+       )
+
+
 
 
         

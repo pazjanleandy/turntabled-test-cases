@@ -1,7 +1,24 @@
 import os
+from pathlib import Path
 
 import pytest
 
+
+def load_dotenv_file(path: str = ".env"):
+    env_path = Path(path)
+    if not env_path.exists():
+        return
+
+    for raw_line in env_path.read_text().splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+
+        key, value = line.split("=", 1)
+        os.environ.setdefault(key.strip(), value.strip().strip('"'))
+
+
+load_dotenv_file()
 
 BASE_URL = os.getenv("BASE_URL", "https://turntabled-backend.onrender.com/")
 HOME_URL = os.getenv("HOME_URL", "https://turntabled-backend.onrender.com/home")
@@ -65,7 +82,10 @@ ARTIST_SEARCH_TERMS = [
 ]
 
 
-def require_user(index: int = 0) -> dict[str, str]:
+def require_user(index: int | None = None) -> dict[str, str]:
+    if index is None:
+        index = int(os.getenv("TURNTABLED_USER_INDEX", "0"))
+
     user = USERS[index]
     if not user["email"] or not user["password"] or not user["avatar_name"]:
         pytest.skip("Set Turntabled user credentials in environment variables to run this test.")
