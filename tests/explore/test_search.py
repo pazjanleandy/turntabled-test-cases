@@ -38,6 +38,7 @@ BLONDE_RESULT = "Blonde by Frank Ocean"
         ),
     ],
 )
+# EXP-ALB-007, EXP-ALB-008, EXP-ALB-009
 def test_search_finds_matching_album(
     page: Page, term: str, expected_result: str
 ):
@@ -50,6 +51,7 @@ def test_search_finds_matching_album(
     expect(explore_page.album_cards).to_have_count(1)
 
 
+# EXP-ALB-010
 def test_search_is_case_insensitive(page: Page):
     explore_page = ExplorePage(page)
     explore_page.open()
@@ -60,6 +62,7 @@ def test_search_is_case_insensitive(page: Page):
     expect(explore_page.album_cards).to_have_count(1)
 
 
+# EXP-ALB-011
 def test_search_with_no_match_shows_empty_state(page: Page):
     explore_page = ExplorePage(page)
     explore_page.open()
@@ -70,6 +73,7 @@ def test_search_with_no_match_shows_empty_state(page: Page):
     expect(explore_page.album_cards).to_have_count(0)
 
 
+# EXP-ALB-012
 def test_clearing_search_restores_catalog(page: Page):
     explore_page = ExplorePage(page)
     explore_page.open()

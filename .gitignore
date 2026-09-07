@@ -4,6 +4,7 @@ __pycache__/
 test-results/
 playwright-report/
 .auth/
+auth.state
 playwright/.auth/
 screenshots/*
 !screenshots/.gitkeep
@@ -12,3 +13,4 @@ videos/
 .vscode/
 test_learn_playwright.py
 videos/
+pytestdebug.log
