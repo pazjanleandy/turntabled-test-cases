@@ -27,6 +27,7 @@ LOGGED_ALBUMS_URL = f"{BASE_URL.rstrip('/')}/backlog"
 PROFILE_URL = f"{BASE_URL.rstrip('/')}/profile"
 FRIENDS_URL = f"{BASE_URL.rstrip('/')}/friends"
 LISTS_URL = f"{BASE_URL.rstrip('/')}/lists"
+ARTISTS_URL = f"{BASE_URL.rstrip('/')}/artists"
 
 FRIEND_USERNAMES = ["gusion", "PunishedMopy"]
 

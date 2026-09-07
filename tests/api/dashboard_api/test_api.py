@@ -54,6 +54,29 @@ def test_trending_reviews_sorted_by_interaction_count():
 
     assert interaction_counts == sorted(interaction_counts, reverse = True)
 
-    
+def test_notification_unread_count(api_headers):
+    response = requests.get(
+        "https://turntabled-backend.onrender.com/api/notifications/unread-count",
+        headers=api_headers,
+    )
+    data = response.json()
+    assert response.status_code == 200
+    assert "unreadCount" in data
+    unread_count = data["unreadCount"]
+    assert type(unread_count) is int
+    assert unread_count >= 0
 
+def test_user_endpoint(api_headers, supabase_url, test_user_email):
+    response = requests.get(f"{supabase_url}/auth/v1/user", headers=api_headers)
+    data = response.json()
+    assert response.status_code == 200
+    assert data["email"] == test_user_email
+
+def test_activity_summary_respects_limit(api_headers):
+    response = requests.get("https://turntabled-backend.onrender.com/api/backlog/summary?activityLimit=5", headers = api_headers)
+    data = response.json()
+
+    assert response.status_code == 200
+    assert "activity" in data
+    assert len(data["activity"]) <= 5
 

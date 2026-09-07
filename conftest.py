@@ -1,12 +1,24 @@
 import os
 
 import pytest
+import requests
+from dotenv import load_dotenv
 
 from fixtures.auth_state import (
     FRIEND_STATE,
     PRIMARY_STATE,
     authenticated_username,
 )
+
+load_dotenv()
+
+
+def _required_env(*names):
+    for name in names:
+        value = os.getenv(name)
+        if value:
+            return value
+    pytest.fail("Missing required environment variable: " + " or ".join(names))
 
 
 @pytest.fixture(scope="session")
@@ -53,3 +65,54 @@ def two_user_pages(browser):
     finally:
         friend_context.close()
         primary_context.close()
+
+
+@pytest.fixture
+def supabase_url():
+    return _required_env("SUPABASE_URL").rstrip("/")
+
+
+@pytest.fixture
+def supabase_key():
+    return _required_env("SUPABASE_KEY")
+
+
+@pytest.fixture
+def test_user_email():
+    return _required_env("TEST_EMAIL", "TURNTABLED_USER_EMAIL")
+
+
+@pytest.fixture
+def test_user_password():
+    return _required_env("TEST_PASSWORD", "TURNTABLED_USER_PASSWORD")
+
+
+@pytest.fixture
+def api_headers(supabase_url, supabase_key, test_user_email, test_user_password):
+    try:
+        response = requests.post(
+            f"{supabase_url}/auth/v1/token?grant_type=password",
+            headers={
+                "apikey": supabase_key,
+                "Content-Type": "application/json",
+            },
+            json={
+                "email": test_user_email,
+                "password": test_user_password,
+            },
+            timeout=15,
+        )
+    except requests.RequestException as error:
+        pytest.fail(f"Supabase login request failed: {error.__class__.__name__}")
+
+    if response.status_code != 200:
+        pytest.fail(f"Supabase login failed: {response.status_code} {response.text}")
+
+    access_token = response.json().get("access_token")
+    if not access_token:
+        pytest.fail("Supabase login response did not include an access_token.")
+
+    return {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {access_token}",
+    }
